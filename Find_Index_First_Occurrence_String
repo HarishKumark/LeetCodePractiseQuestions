@@ -1,0 +1,20 @@
+
+public class Find_Index_First_Occurrence_String {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int val = strStr("sadbutsad", "sad");
+		
+		System.out.println(val);
+	}
+
+	public static int strStr(String haystack, String needle) {
+
+		if(haystack.contains(needle)){
+			return haystack.indexOf(needle);
+		}
+		return -1;
+		
+	}
+
+}

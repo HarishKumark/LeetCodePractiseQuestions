@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -249,24 +250,116 @@ public class Solution {
     }
 
     public int romanToInt(String s) {
+        int previos = 0, result = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            int currentVal = getValues(c);
+            if (currentVal < previos) {
+                result -= currentVal;
+            } else {
+                result += currentVal;
+            }
+            previos = currentVal;
+        }
+        return result;
+    }
+
+    public int getValues(Character s) {
         switch (s) {
-            case "I":
+            case 'I':
                 return 1;
-            case "V":
+            case 'V':
                 return 5;
-            case "X":
+            case 'X':
                 return 10;
-            case "L":
+            case 'L':
                 return 50;
-            case "C":
+            case 'C':
                 return 100;
-            case "D":
+            case 'D':
                 return 500;
-            case "M":
+            case 'M':
                 return 1000;
             default:
                 return 0;
         }
+    }
+
+    public void moveZeroes(int[] nums) {
+        int a[] = new int[nums.length];
+        Arrays.fill(a, 0);
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (num != 0) {
+                a[count++] = num;
+            }
+        }
+//        Arrays.fill(nums, 0);
+
+        for (int i = 0; i < a.length; i++) {
+            nums[i] = a[i];
+        }
+    }
+
+    public List<List<Integer>> generate(int numRows) {
+
+        List<List<Integer>> l = new LinkedList<>();
+        List<Integer> sublist = new LinkedList<>();
+        sublist.add(1);
+        l.add(sublist);
+        sublist = new LinkedList<>();
+        sublist.add(1);
+        sublist.add(1);
+        l.add(sublist);
+
+        for (int i = 2; i <= numRows; i++) {
+            sublist = new LinkedList<>();
+            int count = i;
+            while (count > 1) {
+                sublist.add(count - 1);
+                count--;
+            }
+            for (int j = 0; j < l.size(); j++) {
+                List<Integer> subListPrev = l.get(j);
+
+            }
+
+            l.add(sublist);
+        }
+
+        System.out.println(l);
+        return l;
+    }
+
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        int countF = 0;
+        int countT = 0;
+        int i = 0;
+        int j = 0;
+        int ans = 0;
+        while (j < answerKey.length()) {
+            if (answerKey.charAt(j) == 'F') {
+                countF++;
+            } else {
+                countT++;
+            }
+            while (Math.min(countF, countT) > k) {
+                if (answerKey.charAt(i) == 'F') {
+                    countF--;
+                } else {
+                    countT--;
+                }
+                i++;
+            }
+            ans = Math.max(ans, countF + countT);
+            j++;
+        }
+        return ans;
+    }
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+
     }
 
     public static void main(String[] args) {
@@ -280,8 +373,18 @@ public class Solution {
 //
 //        System.out.println(Math.round(0.003744923396681088 * 100) / 100.0);
         Solution s = new Solution();
+        System.out.println(s.maxConsecutiveAnswers("TTFF", 2));
+
+//        s.generate(3);
+//        System.out.println(s.romanToInt("LVIII"));
+//        int[] nums = new int[]{0, 1, 0, 3, 12};
+//        s.moveZeroes(nums);
+//        for (int num : nums) {
+//            System.out.print(num + " ,");
+//        }
+        System.out.println("");
 //        System.out.println(s.containsDuplicate(new int[]{1, 2, 3, 1}));
-        System.out.println(s.minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
+//        System.out.println(s.minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
 
 //        System.out.println(s.gcdOfStrings("ABCABC", "ABC"));
 //        System.out.println(s.gcdOfStrings("ABCDEF", "ABC"));

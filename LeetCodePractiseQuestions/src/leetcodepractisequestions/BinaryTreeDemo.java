@@ -4,7 +4,9 @@
  */
 package leetcodepractisequestions;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import javax.management.Query;
 
@@ -12,7 +14,7 @@ import javax.management.Query;
  *
  * @author hkorada
  */
-public class BSTNew {
+public class BinaryTreeDemo {
 
     static class Node {
 
@@ -32,9 +34,12 @@ public class BSTNew {
 
         static int idx = -1;
 
-        public static Node buildTree(int nodes[]) {
+        public static Node buildTree(Integer nodes[]) {
             idx++;
-            if (nodes[idx] == -1) {
+            if (idx >= nodes.length) {
+                return null;
+            }
+            if (nodes[idx] == null) {
                 return null;
             }
             Node newNode = new Node(nodes[idx]);
@@ -205,8 +210,24 @@ public class BSTNew {
 
     }
 
+    public static List<Integer> addList(Node root, List<Integer> l) {
+        if (root == null) {
+            return null;
+        }
+        l.add(root.data);
+        inorderTraversalNew(root.left);
+        l.add(root.data);
+        inorderTraversalNew(root.right);
+        return l;
+    }
+
+    public static List<Integer> inorderTraversalNew(Node root) {
+        List<Integer> l = new ArrayList<>();
+        return addList(root, l);
+    }
+
     public static void main(String[] args) {
-        int nodes[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
+        Integer nodes[] = {1, null, 2, 3};
         BinaryTree tree = new BinaryTree();
 
         Node root = tree.buildTree(nodes);
@@ -230,6 +251,15 @@ public class BSTNew {
         System.out.println("==============level Order=======================");
         levelOrder(root);
         System.out.println("");
+        System.out.println("==============================================");
+        
+        System.out.println("======================= new =======================");
+
+        for (Integer node : inorderTraversalNew(root)) {
+            System.out.println(node);
+        }
+
+        
         System.out.println("==============================================");
 
         System.out.println("==============Count Of nodes=======================");

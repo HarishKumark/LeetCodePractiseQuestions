@@ -18,6 +18,17 @@ import java.util.List;
  */
 public class Solution {
 
+    class TreeNode {
+
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
     ListNode head;
 
     static class ListNode {
@@ -358,11 +369,120 @@ public class Solution {
         return ans;
     }
 
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+    public static int findPeakElement(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] < arr[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
 
+    public void claculateDist(TreeNode root, TreeNode target, int k) {
+
+    }
+//
+//    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+//        List<Integer> l = new ArrayList<>();
+//
+//        if (root == null) {
+//            return l;
+//        }
+//        if ((root.val - target.val) == k) {
+//            l.add(root.val);
+//            l.add(target.val);
+//        } else {
+//
+//        }
+//
+//        return l;
+//    }
+
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < prerequisites.length; i++) {
+            for (int j = 0; j < prerequisites.length - 1; j++) {
+                if (map.containsKey(prerequisites[i][j + 1])) {
+                    if (map.get(prerequisites[i][j + 1]) == prerequisites[i][j + 1]) {
+
+                    } else {
+
+                    }
+                } else {
+                    map.put(prerequisites[i][j + 1], prerequisites[i][j]);
+                }
+
+            }
+        }
+        return false;
+    }
+
+    public int findIntervals(int[][] arr) {
+
+        int[] firstVal = arr[0];
+        int count = 0;
+        for (int i = 1; i < arr.length; i++) {
+            int[] secondVal = arr[i];
+            if (firstVal[0] + 1 == secondVal[0] && (firstVal[1] + 1 == secondVal[1])) {
+                firstVal = secondVal;
+            } else {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+    public int findNumberOfLIS(int[] nums) {
+        int n = nums.length;
+        if (n == 0) {
+            return 0;
+        }
+
+        int[] length = new int[n];
+        int[] count = new int[n];
+
+        Arrays.fill(length, 1);
+        Arrays.fill(count, 1);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    if (length[j] + 1 > length[i]) {
+                        length[i] = length[j] + 1;
+                        count[i] = count[j];
+                    } else if (length[j] + 1 == length[i]) {
+                        count[i] += count[j];
+                    }
+                }
+            }
+        }
+        return n;
+    }
+
+    public double myPow(double x, int n) {
+        Math.pow(x, x);
+        if (n == 0) {
+            return 1;
+        }
+//        System.out.println("x * n " + x + " == " + n);
+        return x * myPow(x, --n);
     }
 
     public static void main(String[] args) {
+
+        Solution s = new Solution();
+        System.out.println("pow == " + s.findPeakElement(new int[]{0,10,0}));
+//        System.out.println("val == " + s.findIntervals(new int[][]{{1, 2}, {2, 3}, {3, 4}, {1, 3}}));
+//        System.out.println("val == " + s.findIntervals(new int[][]{{1, 2}, {1, 2}, {1, 2}}));
+//        System.out.println("val == " + s.findIntervals(new int[][]{{1, 2}, {2, 3}}));
+//        s.distanceK(root, target, 0);
 
 //        boolean b[] = new boolean[26];
 //        String str = "abbccda";
@@ -372,9 +492,7 @@ public class Solution {
 //        System.out.println(str.split("vs")[0]);
 //
 //        System.out.println(Math.round(0.003744923396681088 * 100) / 100.0);
-        Solution s = new Solution();
-        System.out.println(s.maxConsecutiveAnswers("TTFF", 2));
-
+//        System.out.println(s.maxConsecutiveAnswers("TTFF", 2));
 //        s.generate(3);
 //        System.out.println(s.romanToInt("LVIII"));
 //        int[] nums = new int[]{0, 1, 0, 3, 12};

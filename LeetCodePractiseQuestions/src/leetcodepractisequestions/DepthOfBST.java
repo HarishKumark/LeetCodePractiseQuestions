@@ -4,6 +4,9 @@
  */
 package leetcodepractisequestions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author hkorada
@@ -28,22 +31,34 @@ public class DepthOfBST {
 
     }
 
+    public List<Integer> addList(TreeNode root, List<Integer> l) {
+        if (root == null) {
+            return l;
+        }
+        inorderTraversal(root.left);
+        l.add(root.val);
+        inorderTraversal(root.right);
+        return l;
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> l = new ArrayList<>();
+        return addList(root, l);
+    }
+
     public TreeNode insertData(int data[]) {
         if (data == null) {
             return null;
         }
         return null;
-        
 
     }
 
 //    public int minDepth(TreeNode root) {
 //
 //    }
-
     public static void main(String[] args) {
         DepthOfBST dp = new DepthOfBST();
-        
 
     }
 }
